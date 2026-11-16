@@ -23,8 +23,8 @@ function App() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState("");
-
   const [newProduct, setNewProduct] = useState(initialProduct);
+  const [editingProduct, setEditingProduct] = useState(null);
 
   const menuItems = [
     "Dashboard",
@@ -60,6 +60,7 @@ function App() {
     },
   ];
 
+  // Retrieve products from Django API
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -84,6 +85,7 @@ function App() {
     fetchProducts();
   }, []);
 
+  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -93,6 +95,7 @@ function App() {
     }));
   };
 
+  // Add a new product
   const handleAddProduct = async (e) => {
     e.preventDefault();
 
@@ -116,9 +119,7 @@ function App() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          JSON.stringify(data)
-        );
+        throw new Error(JSON.stringify(data));
       }
 
       setNewProduct(initialProduct);
@@ -131,6 +132,107 @@ function App() {
     } finally {
       setSaving(false);
     }
+  };
+
+  // Open the edit form with existing product details
+  const handleEditProduct = (product) => {
+    setEditingProduct(product.id);
+
+    setNewProduct({
+      name: product.name,
+      description: product.description || "",
+      category: product.category,
+      price: product.price,
+      stock_quantity: product.stock_quantity,
+      size: product.size || "",
+      colour: product.colour || "",
+    });
+
+    setShowAddForm(true);
+    setError("");
+    setSuccess("");
+  };
+
+  // Save edited product using Django PUT API
+  const handleUpdateProduct = async (e) => {
+    e.preventDefault();
+
+    setSaving(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await fetch(
+        `${API_URL}${editingProduct}/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...newProduct,
+            price: Number(newProduct.price),
+            stock_quantity: Number(newProduct.stock_quantity),
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(JSON.stringify(data));
+      }
+
+      setSuccess("Product updated successfully!");
+      setEditingProduct(null);
+      setNewProduct(initialProduct);
+      setShowAddForm(false);
+
+      await fetchProducts();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // Delete product using Django DELETE API
+  const handleDeleteProduct = async (product) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${product.name}"?`
+    );
+
+    if (!confirmed) return;
+
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await fetch(
+        `${API_URL}${product.id}/`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Unable to delete this product.");
+      }
+
+      setSuccess("Product deleted successfully!");
+
+      await fetchProducts();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Cancel adding or editing
+  const handleCancelForm = () => {
+    setShowAddForm(false);
+    setEditingProduct(null);
+    setNewProduct(initialProduct);
+    setError("");
   };
 
   const filteredProducts = products.filter((product) =>
@@ -169,7 +271,7 @@ function App() {
                 setActivePage(item);
                 setSuccess("");
                 setError("");
-                setShowAddForm(false);
+                handleCancelForm();
               }}
             >
               <span>
@@ -205,6 +307,7 @@ function App() {
           </div>
         </header>
 
+        {/* DASHBOARD */}
         {activePage === "Dashboard" && (
           <>
             <section className="welcome">
@@ -360,6 +463,7 @@ function App() {
           </>
         )}
 
+        {/* PRODUCTS */}
         {activePage === "Products" && (
           <section className="panel product-panel">
             <div className="panel-heading">
@@ -371,9 +475,15 @@ function App() {
               <button
                 className="outline-button"
                 onClick={() => {
-                  setShowAddForm(!showAddForm);
-                  setError("");
-                  setSuccess("");
+                  if (showAddForm) {
+                    handleCancelForm();
+                  } else {
+                    setEditingProduct(null);
+                    setNewProduct(initialProduct);
+                    setShowAddForm(true);
+                    setError("");
+                    setSuccess("");
+                  }
                 }}
               >
                 {showAddForm ? "Cancel" : "+ Add Product"}
@@ -392,16 +502,23 @@ function App() {
               </p>
             )}
 
+            {/* ADD OR EDIT PRODUCT FORM */}
             {showAddForm && (
               <form
-                onSubmit={handleAddProduct}
+                onSubmit={
+                  editingProduct
+                    ? handleUpdateProduct
+                    : handleAddProduct
+                }
                 style={{
                   display: "grid",
                   gap: "15px",
                   padding: "20px 0",
                 }}
               >
-                <h3>Add New Product</h3>
+                <h3>
+                  {editingProduct ? "Edit Product" : "Add New Product"}
+                </h3>
 
                 <label>
                   Product Name
@@ -491,13 +608,27 @@ function App() {
                   />
                 </label>
 
-                <button
-                  type="submit"
-                  className="outline-button"
-                  disabled={saving}
-                >
-                  {saving ? "Saving..." : "Save Product"}
-                </button>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <button
+                    type="submit"
+                    className="outline-button"
+                    disabled={saving}
+                  >
+                    {saving
+                      ? "Saving..."
+                      : editingProduct
+                        ? "Save Changes"
+                        : "Save Product"}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="outline-button"
+                    onClick={handleCancelForm}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </form>
             )}
 
@@ -522,6 +653,7 @@ function App() {
                       <th>Size</th>
                       <th>Colour</th>
                       <th>Status</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
 
@@ -534,6 +666,7 @@ function App() {
                         <td>{formatPrice(product.price)}</td>
                         <td>{product.size || "-"}</td>
                         <td>{product.colour || "-"}</td>
+
                         <td>
                           <span
                             className={
@@ -544,6 +677,43 @@ function App() {
                           >
                             {getProductStatus(product.stock_quantity)}
                           </span>
+                        </td>
+
+                        <td>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "8px",
+                              alignItems: "center",
+                            }}
+                          >
+                            <button
+                              type="button"
+                              className="outline-button"
+                              onClick={() => handleEditProduct(product)}
+                              style={{
+                                padding: "6px 10px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              Edit
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteProduct(product)}
+                              style={{
+                                padding: "6px 10px",
+                                border: "none",
+                                borderRadius: "6px",
+                                background: "#f8e1e1",
+                                color: "#a52a2a",
+                                cursor: "pointer",
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -558,6 +728,7 @@ function App() {
           </section>
         )}
 
+        {/* OTHER MODULES */}
         {!["Dashboard", "Products"].includes(activePage) && (
           <section className="panel placeholder">
             <h2>{activePage}</h2>
