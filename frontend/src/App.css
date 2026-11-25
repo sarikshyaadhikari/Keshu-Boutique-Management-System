@@ -1,457 +1,1097 @@
 
+/*
+=========================================================
+KESHU BOUTIQUE COLLECTION
+MAIN STYLESHEET - App.css
+=========================================================
+
+Purpose:
+This stylesheet controls the visual appearance of the
+Keshu Boutique Inventory and Order Management System.
+
+Technologies:
+- CSS: Controls styling and layout.
+- Flexbox: Arranges elements in rows and columns.
+- CSS Grid: Creates dashboard and statistics layouts.
+- Media Queries: Make the application responsive.
+
+Main styling sections:
+1. Global styles
+2. Sidebar and navigation
+3. Header
+4. Welcome section
+5. Dashboard statistics
+6. Product and order panels
+7. Product tables
+8. Status indicators
+9. Footer and placeholder pages
+10. Responsive design
+=========================================================
+*/
+
+
+/* =======================================================
+   1. GLOBAL STYLES
+======================================================= */
+
+/* The universal selector (*) applies these rules
+   to every HTML element in the application. */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0;              /* Removes default outside spacing. */
+  padding: 0;             /* Removes default inside spacing. */
+  box-sizing: border-box; /* Includes padding and borders in an element's total width and height. */
 }
 
+/* Styles the entire webpage body. */
 body {
   font-family: "Inter", "Segoe UI", sans-serif;
+  /* Sets the text font.
+     Inter is preferred, followed by Segoe UI.
+     sans-serif is the fallback font family. */
+
   background: #f8f6f3;
+  /* Sets a light warm background colour. */
+
   color: #332b2b;
+  /* Sets the default text colour to dark brown. */
 }
 
+/* Applies the same font settings to buttons and input fields. */
 button, input {
   font: inherit;
+  /* Makes these elements use the font inherited from their parent. */
 }
 
+/* Changes the mouse pointer when hovering over a button. */
 button {
   cursor: pointer;
+  /* pointer displays a hand cursor to indicate clickability. */
 }
 
+
+/* =======================================================
+   2. MAIN APPLICATION LAYOUT
+======================================================= */
+
+/* Main container holding the sidebar and main content. */
 .app {
   display: flex;
+  /* Flexbox places the sidebar and main content beside each other. */
+
   min-height: 100vh;
+  /* Makes the application at least as tall as the browser window.
+     vh means viewport height. */
 }
 
+
+/* =======================================================
+   3. SIDEBAR
+======================================================= */
+
+/* Styles the left navigation sidebar. */
 .sidebar {
   width: 250px;
+  /* Sets the sidebar width to 250 pixels. */
+
   min-height: 100vh;
+  /* Makes the sidebar at least the full screen height. */
+
   background: #542b36;
+  /* Applies the dark burgundy background colour. */
+
   color: white;
+  /* Sets the default sidebar text colour to white. */
+
   padding: 30px 18px;
+  /* Adds 30px vertical and 18px horizontal inner spacing. */
+
   display: flex;
+  /* Enables Flexbox for arranging sidebar contents. */
+
   flex-direction: column;
+  /* Places sidebar elements vertically. */
+
   flex-shrink: 0;
+  /* Prevents the sidebar from shrinking when space is limited. */
 }
 
+
+/* =======================================================
+   4. BRAND AND LOGO
+======================================================= */
+
+/* Arranges the boutique logo and name horizontally. */
 .brand {
   display: flex;
+  /* Places the logo and brand text in a row. */
+
   align-items: center;
+  /* Vertically aligns the logo and text. */
+
   gap: 12px;
+  /* Adds 12px spacing between the logo and brand text. */
+
   padding: 0 10px 38px;
+  /* Adds 10px horizontal padding and 38px bottom padding. */
 }
 
+/* Styles the square logo containing the letter K. */
 .brand-icon {
   width: 43px;
+  /* Sets logo width. */
+
   height: 43px;
+  /* Sets logo height. */
+
   border: 1px solid #e8c9b9;
+  /* Adds a thin light beige border. */
+
   border-radius: 12px;
+  /* Rounds the corners of the logo. */
+
   display: grid;
+  /* Uses CSS Grid to position the logo content. */
+
   place-items: center;
+  /* Horizontally and vertically centres the letter K. */
+
   font-size: 23px;
+  /* Sets the size of the letter K. */
+
   color: #f1d6c5;
+  /* Sets the letter colour to light beige. */
 }
 
+/* Styles the main boutique name. */
 .brand h2 {
   font-size: 20px;
+  /* Sets the heading text size. */
+
   letter-spacing: 3px;
+  /* Adds spacing between letters. */
 }
 
+/* Styles the smaller brand subtitle. */
 .brand span {
   display: block;
+  /* Makes the subtitle appear on its own line. */
+
   font-size: 9px;
+  /* Sets a small subtitle font size. */
+
   letter-spacing: 1.3px;
+  /* Adds spacing between subtitle letters. */
+
   color: #e4c9c4;
+  /* Uses a light pink-beige text colour. */
+
   margin-top: 4px;
+  /* Adds space above the subtitle. */
 }
 
+
+/* =======================================================
+   5. SIDEBAR MENU LABEL
+======================================================= */
+
+/* Styles the MAIN MENU heading. */
 .menu-label {
   font-size: 10px;
+  /* Sets a small heading size. */
+
   letter-spacing: 1.8px;
+  /* Adds spacing between letters. */
+
   color: #d4b6b6;
+  /* Applies a muted pink colour. */
+
   margin: 0 12px 15px;
+  /* Adds horizontal spacing and 15px bottom spacing. */
 }
 
+
+/* =======================================================
+   6. SIDEBAR NAVIGATION
+======================================================= */
+
+/* Arranges navigation buttons vertically. */
 .sidebar nav {
   display: flex;
+  /* Enables Flexbox. */
+
   flex-direction: column;
+  /* Places navigation buttons one below another. */
+
   gap: 7px;
+  /* Adds 7px spacing between navigation buttons. */
 }
 
+/* Styles each individual navigation button. */
 .nav-item {
   display: flex;
+  /* Places the icon and menu text in a row. */
+
   align-items: center;
+  /* Vertically centres the icon and text. */
+
   gap: 13px;
+  /* Adds space between the icon and menu name. */
+
   width: 100%;
+  /* Makes the button occupy the full available sidebar width. */
+
   padding: 13px 14px;
+  /* Adds inner spacing around the button content. */
+
   border: none;
+  /* Removes the default button border. */
+
   border-radius: 8px;
+  /* Rounds the button corners. */
+
   background: transparent;
+  /* Makes the button background transparent by default. */
+
   color: #f2e5e3;
+  /* Sets the navigation text colour. */
+
   text-align: left;
+  /* Aligns button text to the left. */
+
   font-size: 14px;
+  /* Sets the navigation text size. */
+
   transition: 0.2s;
+  /* Makes hover and active colour changes smoother. */
 }
 
+/* Styles the icons inside navigation buttons. */
 .nav-item span {
   width: 20px;
+  /* Gives each icon a consistent width. */
+
   font-size: 18px;
+  /* Sets the icon size. */
+
   text-align: center;
+  /* Centres the icon inside its allocated space. */
 }
 
+/* Applies styling when a navigation item is hovered over
+   or when it represents the currently active page. */
 .nav-item:hover,
 .nav-item.active {
   background: #754653;
+  /* Changes the background to a lighter burgundy. */
+
   color: white;
+  /* Changes the text colour to white. */
 }
 
+
+/* =======================================================
+   7. SIDEBAR ADMINISTRATOR PROFILE
+======================================================= */
+
+/* Styles the administrator information at the bottom
+   of the sidebar. */
 .sidebar-bottom {
   display: flex;
+  /* Places the avatar and administrator information in a row. */
+
   align-items: center;
+  /* Vertically aligns the profile elements. */
+
   gap: 12px;
+  /* Adds space between the avatar and text. */
+
   margin-top: auto;
+  /* Pushes the profile section towards the bottom
+     of the sidebar's Flexbox layout. */
+
   padding: 20px 8px 0;
+  /* Adds top and horizontal inner spacing. */
+
   border-top: 1px solid #79515a;
+  /* Adds a horizontal separator above the profile. */
 }
 
+/* Styles the circular administrator avatars.
+   Both classes share the same appearance. */
 .profile-avatar,
 .user-avatar {
   width: 38px;
+  /* Sets avatar width. */
+
   height: 38px;
+  /* Sets avatar height. */
+
   border-radius: 50%;
+  /* Makes the avatar circular. */
+
   display: grid;
+  /* Uses CSS Grid for positioning the initials. */
+
   place-items: center;
+  /* Centres the initials horizontally and vertically. */
+
   background: #e9c8b9;
+  /* Applies a light beige background. */
+
   color: #542b36;
+  /* Sets the initials to dark burgundy. */
+
   font-weight: 700;
+  /* Makes the initials bold. */
+
   font-size: 12px;
+  /* Sets the initials font size. */
 }
 
+/* Displays administrator name and subtitle on separate lines. */
 .sidebar-bottom strong,
 .sidebar-bottom span {
   display: block;
+  /* Makes each text element occupy its own line. */
+
   font-size: 12px;
+  /* Sets the profile text size. */
 }
 
+/* Styles the smaller administrator role description. */
 .sidebar-bottom span {
   color: #e0c6c5;
+  /* Uses a muted light colour. */
+
   margin-top: 4px;
+  /* Adds space above the role description. */
 }
 
+
+/* =======================================================
+   8. MAIN CONTENT AREA
+======================================================= */
+
+/* Styles the large content area beside the sidebar. */
 .main-content {
   flex: 1;
+  /* Allows the main content to occupy the remaining horizontal space. */
+
   min-width: 0;
+  /* Allows the content to shrink without forcing overflow. */
+
   padding: 32px 38px;
+  /* Adds 32px vertical and 38px horizontal spacing. */
 }
 
+
+/* =======================================================
+   9. TOP HEADER
+======================================================= */
+
+/* Arranges the breadcrumb, page title and right-side
+   information across the header. */
 .topbar {
   display: flex;
+  /* Enables horizontal Flexbox layout. */
+
   align-items: center;
+  /* Vertically centres header content. */
+
   justify-content: space-between;
+  /* Places left and right content at opposite ends. */
+
   margin-bottom: 28px;
+  /* Adds space below the header. */
 }
 
+/* Styles the breadcrumb navigation text. */
 .breadcrumb {
   color: #998a87;
+  /* Uses a muted grey-brown colour. */
+
   font-size: 12px;
+  /* Sets breadcrumb text size. */
+
   margin-bottom: 8px;
+  /* Adds space below the breadcrumb. */
 }
 
+/* Styles the main page heading. */
 .topbar h1 {
   font-size: 27px;
+  /* Sets the page title size. */
+
   font-weight: 650;
+  /* Makes the heading semi-bold. */
+
   color: #3e3031;
+  /* Uses dark brown text. */
 }
 
+/* Arranges date, notification and avatar horizontally. */
 .topbar-right {
   display: flex;
+  /* Enables horizontal layout. */
+
   align-items: center;
+  /* Vertically aligns the elements. */
+
   gap: 18px;
+  /* Adds spacing between header elements. */
 }
 
+/* Styles the date displayed in the header. */
 .today {
   color: #796b68;
+  /* Sets a muted brown-grey colour. */
+
   font-size: 13px;
+  /* Sets the date text size. */
 }
 
+/* Styles the notification icon. */
 .notification {
   font-size: 21px;
+  /* Sets the notification icon size. */
+
   color: #76515a;
+  /* Uses a burgundy colour. */
 }
 
+
+/* =======================================================
+   10. DASHBOARD WELCOME SECTION
+======================================================= */
+
+/* Styles the welcome banner displayed on the dashboard. */
 .welcome {
   background: #efe3dc;
+  /* Applies a light beige-pink background. */
+
   border: 1px solid #e6d4ca;
+  /* Adds a subtle border. */
+
   border-radius: 12px;
+  /* Rounds the banner corners. */
+
   padding: 24px 28px;
+  /* Adds internal spacing. */
+
   display: flex;
+  /* Places welcome text and decorative icon in a row. */
+
   align-items: center;
+  /* Vertically centres the banner content. */
+
   justify-content: space-between;
+  /* Places text and icon at opposite ends. */
+
   margin-bottom: 25px;
+  /* Adds space below the welcome banner. */
 }
 
+/* Styles the welcome heading. */
 .welcome h2 {
   font-size: 19px;
+  /* Sets the heading size. */
+
   margin-bottom: 8px;
+  /* Adds spacing below the heading. */
+
   color: #542b36;
+  /* Uses the main burgundy colour. */
 }
 
+/* Styles the welcome description. */
 .welcome p {
   color: #796b68;
+  /* Applies muted brown-grey text. */
+
   font-size: 13px;
+  /* Sets description text size. */
 }
 
+/* Styles the decorative star icon in the welcome banner. */
 .welcome-icon {
   font-size: 37px;
+  /* Sets the decorative icon size. */
+
   color: #986c70;
+  /* Uses a muted rose colour. */
 }
 
+
+/* =======================================================
+   11. DASHBOARD STATISTICS GRID
+======================================================= */
+
+/* Creates the four-column layout for dashboard statistics. */
 .stats-grid {
   display: grid;
+  /* Enables CSS Grid layout. */
+
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Creates four equal-width columns.
+     minmax(0, 1fr) allows columns to shrink appropriately. */
+
   gap: 17px;
+  /* Adds space between statistic cards. */
+
   margin-bottom: 25px;
+  /* Adds space below the statistics section. */
 }
 
+/* Styles each individual statistics card. */
 .stat-card {
   background: white;
+  /* Gives each card a white background. */
+
   padding: 21px;
+  /* Adds internal spacing. */
+
   border: 1px solid #eee7e1;
+  /* Adds a subtle light border. */
+
   border-radius: 11px;
+  /* Rounds the card corners. */
+
   box-shadow: 0 2px 8px rgba(60, 35, 35, 0.035);
+  /* Adds a subtle shadow.
+     The values represent horizontal offset, vertical offset,
+     blur radius and shadow colour with transparency. */
 }
 
+/* Common style for statistic card icons. */
 .stat-icon {
   width: 37px;
+  /* Sets icon container width. */
+
   height: 37px;
+  /* Sets icon container height. */
+
   display: grid;
+  /* Uses CSS Grid for icon positioning. */
+
   place-items: center;
+  /* Centres the icon. */
+
   border-radius: 9px;
+  /* Rounds the icon background corners. */
+
   font-size: 17px;
+  /* Sets the icon font size. */
+
   margin-bottom: 17px;
+  /* Adds spacing below the icon. */
 }
 
-.purple { background: #eee7f5; color: #795a9b; }
-.green { background: #e5f1e8; color: #50815e; }
-.orange { background: #faeddf; color: #b47b40; }
-.pink { background: #f8e7e9; color: #a95f6c; }
+/* Purple statistic icon background and text. */
+.purple {
+  background: #eee7f5;
+  color: #795a9b;
+}
 
+/* Green statistic icon background and text. */
+.green {
+  background: #e5f1e8;
+  color: #50815e;
+}
+
+/* Orange statistic icon background and text. */
+.orange {
+  background: #faeddf;
+  color: #b47b40;
+}
+
+/* Pink statistic icon background and text. */
+.pink {
+  background: #f8e7e9;
+  color: #a95f6c;
+}
+
+/* Styles the statistic card labels. */
 .stat-card p {
   color: #897d78;
+  /* Sets a muted text colour. */
+
   font-size: 12px;
+  /* Sets the label font size. */
 }
 
+/* Styles the large statistic values. */
 .stat-card h2 {
   font-size: 28px;
+  /* Makes the numbers larger and easier to read. */
+
   margin: 7px 0;
+  /* Adds vertical spacing around the number. */
+
   color: #3e3031;
+  /* Uses dark brown text. */
 }
 
+/* Styles the smaller descriptions beneath statistics. */
 .stat-card small {
   color: #a49a95;
+  /* Applies a light grey-brown colour. */
+
   font-size: 11px;
+  /* Sets a small description size. */
 }
 
+
+/* =======================================================
+   12. DASHBOARD CONTENT GRID
+======================================================= */
+
+/* Arranges the recent products and recent orders panels. */
 .content-grid {
   display: grid;
+  /* Enables CSS Grid layout. */
+
   grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+  /* Creates two columns.
+     The first column is wider (1.6fr).
+     The second column has a minimum width of 280px. */
+
   gap: 20px;
+  /* Adds spacing between the panels. */
 }
 
+
+/* =======================================================
+   13. GENERAL PANEL STYLING
+======================================================= */
+
+/* Shared appearance for dashboard and product panels. */
 .panel {
   background: white;
+  /* Sets a white panel background. */
+
   border: 1px solid #eee7e1;
+  /* Adds a subtle border. */
+
   border-radius: 11px;
+  /* Rounds panel corners. */
+
   padding: 22px;
+  /* Adds internal spacing. */
+
   box-shadow: 0 2px 8px rgba(60, 35, 35, 0.035);
+  /* Adds a light shadow for visual separation. */
+
   min-width: 0;
+  /* Prevents grid content from forcing excessive width. */
 }
 
+
+/* =======================================================
+   14. PANEL HEADINGS
+======================================================= */
+
+/* Arranges panel titles and action buttons horizontally. */
 .panel-heading {
   display: flex;
+  /* Enables Flexbox. */
+
   align-items: center;
+  /* Vertically centres the heading content. */
+
   justify-content: space-between;
+  /* Pushes heading and button to opposite sides. */
+
   gap: 10px;
+  /* Adds spacing between the elements. */
+
   margin-bottom: 20px;
+  /* Adds space below the panel heading. */
 }
 
+/* Styles the panel title. */
 .panel-heading h3 {
   font-size: 15px;
+  /* Sets title text size. */
+
   color: #443638;
+  /* Uses dark brown text. */
 }
 
+/* Styles the panel subtitle. */
 .panel-heading p {
   font-size: 11px;
+  /* Sets smaller subtitle text. */
+
   color: #a19791;
+  /* Uses muted grey-brown text. */
+
   margin-top: 6px;
+  /* Adds space above the subtitle. */
 }
 
+
+/* =======================================================
+   15. BUTTON STYLING
+======================================================= */
+
+/* Styles buttons with the outline-button class. */
 .outline-button {
   border: 1px solid #d9c2bc;
+  /* Adds a light beige border. */
+
   border-radius: 6px;
+  /* Rounds button corners. */
+
   padding: 8px 12px;
+  /* Adds internal spacing. */
+
   background: white;
+  /* Sets a white background. */
+
   color: #71444d;
+  /* Sets the button text to burgundy. */
+
   font-size: 11px;
+  /* Sets the button text size. */
 }
 
+/* Changes button background when the mouse hovers over it. */
 .outline-button:hover {
   background: #f8efeb;
+  /* Applies a light warm background on hover. */
 }
 
+
+/* =======================================================
+   16. SEARCH INPUT
+======================================================= */
+
+/* Styles product search inputs and other elements
+   that use the search-input class. */
 .search-input {
   width: 100%;
+  /* Makes the input fill the available panel width. */
+
   border: 1px solid #e9e1dc;
+  /* Adds a subtle border. */
+
   border-radius: 7px;
+  /* Rounds the input corners. */
+
   padding: 10px 12px;
+  /* Adds internal spacing for entered text. */
+
   font-size: 12px;
+  /* Sets input text size. */
+
   margin-bottom: 15px;
+  /* Adds spacing below the input. */
+
   outline: none;
+  /* Removes the browser's default outline. */
 }
 
+/* Changes the input border when the user clicks or focuses it. */
 .search-input:focus {
   border-color: #a77b80;
+  /* Highlights the input with a muted burgundy border. */
 }
 
+
+/* =======================================================
+   17. PRODUCT TABLE
+======================================================= */
+
+/* Allows tables to scroll horizontally if they are too wide. */
 .table-wrap {
   overflow-x: auto;
+  /* Prevents wide tables from breaking the panel layout.
+     A horizontal scrollbar appears when necessary. */
 }
 
+/* General styling for product tables. */
 table {
   width: 100%;
+  /* Makes the table use the full available width. */
+
   border-collapse: collapse;
+  /* Combines adjacent table borders into single borders. */
+
   text-align: left;
+  /* Aligns table content to the left. */
+
   white-space: nowrap;
+  /* Prevents table cell text from wrapping onto new lines. */
 }
 
+/* Styles table heading cells. */
 th {
   color: #a09690;
+  /* Sets a muted heading colour. */
+
   font-size: 10px;
+  /* Sets small heading text. */
+
   font-weight: 600;
+  /* Makes table headings semi-bold. */
+
   padding: 12px 9px;
+  /* Adds spacing inside heading cells. */
+
   border-bottom: 1px solid #eee8e3;
+  /* Adds a separator below the table headings. */
 }
 
+/* Styles regular table data cells. */
 td {
   font-size: 11px;
+  /* Sets table text size. */
+
   padding: 15px 9px;
+  /* Adds spacing inside data cells. */
+
   border-bottom: 1px solid #f2eeeb;
+  /* Adds a light separator between rows. */
+
   color: #776d69;
+  /* Sets the default cell text colour. */
 }
 
+/* Makes important text inside table cells darker. */
 td strong {
   color: #45393a;
+  /* Highlights product names using dark brown. */
 }
 
+
+/* =======================================================
+   18. PRODUCT STOCK STATUS INDICATORS
+======================================================= */
+
+/* Common styling for stock status labels. */
 .status {
   padding: 5px 8px;
+  /* Adds internal spacing around the label. */
+
   border-radius: 20px;
+  /* Creates a rounded pill-shaped label. */
+
   font-size: 10px;
+  /* Sets small status text. */
 }
 
+/* Styling for products that are in stock. */
 .status.good {
   background: #e8f3e9;
+  /* Applies a light green background. */
+
   color: #54835d;
+  /* Uses green text to indicate good stock. */
 }
 
+/* Styling for products with low stock. */
 .status.low {
   background: #fbefdf;
+  /* Applies a light orange background. */
+
   color: #b27a36;
+  /* Uses orange-brown text to indicate low stock. */
 }
 
+
+/* =======================================================
+   19. RECENT ORDERS
+======================================================= */
+
+/* Styles each individual order row. */
 .order-item {
   display: flex;
+  /* Places customer and order information in a row. */
+
   justify-content: space-between;
+  /* Places customer details and amount on opposite sides. */
+
   gap: 10px;
+  /* Adds spacing between the two sections. */
+
   padding: 17px 0;
+  /* Adds vertical spacing around each order. */
+
   border-bottom: 1px solid #f0ebe7;
+  /* Adds a separator below each order. */
 }
 
+/* Makes order names and secondary information appear
+   on separate lines. */
 .order-item strong,
 .order-item span {
   display: block;
+  /* Each element occupies its own line. */
 }
 
+/* Styles the main order information. */
 .order-item strong {
   font-size: 12px;
+  /* Sets the order text size. */
+
   color: #493b3b;
+  /* Uses dark brown text. */
 }
 
+/* Styles the smaller order details. */
 .order-item span {
   font-size: 10px;
+  /* Sets smaller text. */
+
   color: #a09690;
+  /* Applies muted grey-brown text. */
+
   margin-top: 6px;
+  /* Adds spacing above the details. */
 }
 
+/* Aligns the amount and status to the right. */
 .order-right {
   text-align: right;
+  /* Right-aligns the order amount and status. */
 }
 
+/* Highlights the order status. */
 .order-right .order-status {
   color: #80535c;
+  /* Uses burgundy text for order status. */
 }
 
+
+/* =======================================================
+   20. FOOTER
+======================================================= */
+
+/* Styles the dashboard footer. */
 footer {
   text-align: center;
+  /* Centres the footer text. */
+
   padding: 27px 0 5px;
+  /* Adds top and bottom spacing. */
+
   color: #a49a95;
+  /* Uses muted grey-brown text. */
+
   font-size: 10px;
+  /* Sets a small footer text size. */
 }
 
+
+/* =======================================================
+   21. PLACEHOLDER MODULES
+======================================================= */
+
+/* Adds extra spacing to placeholder pages. */
 .placeholder {
   padding: 40px;
+  /* Creates more space around placeholder content. */
 }
 
+/* Styles placeholder page headings. */
 .placeholder h2 {
   margin-bottom: 12px;
+  /* Adds space below the heading. */
 }
 
+/* Styles placeholder page descriptions. */
 .placeholder p {
   color: #897d78;
+  /* Applies muted text colour. */
+
   margin-bottom: 8px;
+  /* Adds spacing between paragraphs. */
+
   font-size: 13px;
+  /* Sets paragraph text size. */
 }
 
+
+/* =======================================================
+   22. RESPONSIVE DESIGN - TABLETS AND SMALL LAPTOPS
+======================================================= */
+
+/* A media query applies CSS rules only when the
+   browser viewport is 1050px wide or smaller. */
 @media (max-width: 1050px) {
+
+  /* Change dashboard statistics from four columns
+     to two columns on smaller screens. */
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Stack the dashboard panels vertically. */
   .content-grid {
     grid-template-columns: 1fr;
   }
 }
 
+
+/* =======================================================
+   23. RESPONSIVE DESIGN - MOBILE DEVICES
+======================================================= */
+
+/* These rules apply when the viewport is 650px
+   wide or smaller. */
 @media (max-width: 650px) {
+
+  /* Stack the sidebar and main content vertically. */
   .app {
     flex-direction: column;
   }
 
+  /* Make the sidebar occupy the full screen width. */
   .sidebar {
     width: 100%;
+    /* Changes sidebar width to 100%. */
+
     min-height: auto;
+    /* Allows the sidebar height to fit its content. */
   }
 
+  /* Adjust the administrator profile spacing. */
   .sidebar-bottom {
     margin-top: 20px;
+    /* Adds spacing above the profile section. */
   }
 
+  /* Reduce main content padding for mobile screens. */
   .main-content {
     padding: 22px 16px;
+    /* Uses smaller spacing to create more usable screen area. */
   }
 
+  /* Allow header elements to wrap when there is not enough space. */
   .topbar {
     align-items: flex-start;
+    /* Aligns header items towards the top. */
+
     gap: 15px;
+    /* Adds spacing between header elements. */
+
     flex-wrap: wrap;
+    /* Moves elements onto another line if necessary. */
   }
 
+  /* Keep statistics in two columns on mobile. */
   .stats-grid {
     grid-template-columns: 1fr 1fr;
+    /* Creates two equal-width columns. */
   }
 
+  /* Reduce welcome banner padding on mobile. */
   .welcome {
     padding: 20px;
+    /* Uses smaller internal spacing. */
   }
 }
+
+/* =======================================================
+   END OF APP.CSS
+======================================================= */
